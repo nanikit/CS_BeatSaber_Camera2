@@ -1,4 +1,4 @@
-﻿using Camera2.Behaviours;
+using Camera2.Behaviours;
 using Camera2.HarmonyPatches;
 using Camera2.Interfaces;
 using Camera2.Managers;
@@ -159,7 +159,7 @@ namespace Camera2.Configuration {
 			cam.transformer.rotationEuler = targetRot;
 
 			// Force pivoting offset for 360 Levels - Non-Pivoting offset on 360 levels just looks outright trash
-			cam.transformer.applyAsAbsolute = type != CameraType.Positionable && !Smoothfollow.pivotingOffset && !HookLeveldata.is360Level;
+			cam.transformer.applyAsAbsolute = type == CameraType.FirstPerson || type != CameraType.Positionable && !Smoothfollow.pivotingOffset && !HookLeveldata.is360Level;
 		}
 
 		public void ApplyLayerBitmask() {
