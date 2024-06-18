@@ -112,7 +112,8 @@ namespace Camera2.Behaviours {
 			if(this.name != null) {
 				if(rename) {
 					this.name = name;
-					if(loadConfig) settings.Load(true);
+					if(loadConfig)
+						settings.Load(true);
 				}
 				return;
 			}
@@ -139,7 +140,8 @@ namespace Camera2.Behaviours {
 				Destroy(child.gameObject);
 
 			foreach(var component in camClone.GetComponents<Behaviour>())
-				if(CameraBehavioursToDestroy.Contains(component.GetType().Name)) DestroyImmediate(component);
+				if(CameraBehavioursToDestroy.Contains(component.GetType().Name))
+					DestroyImmediate(component);
 
 
 			//Cloning post process stuff to make it controlable on a per camera basis
@@ -168,6 +170,22 @@ namespace Camera2.Behaviours {
 			};
 
 			camClone.AddComponent<CamPostProcessor>().Init(this);
+
+			ShowOnlyInHmd();
+		}
+
+		private void ShowOnlyInHmd() {
+			int hmdOnly = 17;
+			SetLayerRecursively(transform, hmdOnly);
+		}
+
+		private static void SetLayerRecursively(Transform transform, int layer) {
+			transform.gameObject.layer = layer;
+
+			for (var i = 0; i < transform.childCount; i++) {
+				var child = transform.GetChild(i);
+				SetLayerRecursively(child, layer);
+			}
 		}
 
 		private IMHandler MakeMiddleware<T>() where T : CamMiddleware, IMHandler {
